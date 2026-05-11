@@ -1,0 +1,46 @@
+## [ Visual Studio ]
+.vs/
+[Bb]in/
+[Oo]bj/
+*.user
+*.userosscache
+*.sln.docstates
+
+## [ .NET ]
+project.lock.json
+project.fragment.lock.json
+artifacts/
+publish/
+*.nupkg
+# Se usar User Secrets, as chaves ficam fora do repo por padrão, 
+# mas é bom garantir que ficheiros de runtime não subam.
+appsettings.Development.json
+
+## [ Visual Studio Code ]
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+## [ JetBrains (Rider) ]
+.idea/
+*.sln.iml
+
+## [ Ferramentas e Logs ]
+*.log
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+## [ Docker ]
+.dockerignore
+# Opcional: ignorar ficheiros de ambiente locais
+.env
+.env.local
+
+## [ Entity Framework ]
+# Se não quiser versionar os scripts de bundle
+*.exe
