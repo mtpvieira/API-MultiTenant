@@ -6,17 +6,23 @@ namespace MultiTenantSolution.Data
 {
     public class AppDbContext : DbContext
     {
-        private TenantData _tenantData;
+     //   private TenantData _tenantData;
         public DbSet<Person> People { get; set; }
         public DbSet<Product> Products { get; set; }
 
-        public AppDbContext(TenantData tenantData, DbContextOptions<AppDbContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            _tenantData = tenantData;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            /*
+             Aqui temos o tenantid sendo adicionado diretamente nas entidades para fins de demonstração caso utilize o filtro global.
+             Para a separação por banco de dados, o tenantid não é necessário na coluna, pois cada banco de dados já é isolado por tenant. 
+             O filtro global é mais relevante para a abordagem de compartilhamento de banco de dados, onde os dados de múltiplos tenants coexistem 
+             na mesma base de dados e precisam ser filtrados com base no tenantId para garantir a segurança e a privacidade dos dados.
+             */
+
             modelBuilder.Entity<Person>().HasData(
                 new Person { Id = 1, Name = "Alice Santos", tenantId = "tenant-1" },
                 new Person { Id = 2, Name = "Bob Silva", tenantId = "tenant-1" },
@@ -32,8 +38,11 @@ namespace MultiTenantSolution.Data
             );
 
             //Filtro global para garantir que apenas os dados do tenant atual sejam acessados
-            modelBuilder.Entity<Person>().HasQueryFilter(p => p.tenantId == _tenantData.TenantId);
-            modelBuilder.Entity<Product>().HasQueryFilter(p => p.tenantId == _tenantData.TenantId);
+            //modelBuilder.Entity<Person>().HasQueryFilter(p => p.tenantId == _tenantData.TenantId);
+            //modelBuilder.Entity<Product>().HasQueryFilter(p => p.tenantId == _tenantData.TenantId);
+
+
+
         }
 
     }
